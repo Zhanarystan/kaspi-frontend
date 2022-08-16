@@ -1,0 +1,128 @@
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.col-1 {
+    float: left;
+    width: 10%;
+}
+
+.col-2 {
+    float: left;
+    width: 20%;
+}
+
+.col-3 {
+    float: left;
+    width: 30%;
+}
+
+.col-4 {
+    float: left;
+    width: 40%;
+}
+
+.col-5 {
+    float: left;
+    width: 50%;
+}
+
+.col-6 {
+    float: left;
+    width: 60%;
+}
+
+.col-7 {
+    float: left;
+    width: 70%;
+}
+
+.col-8 {
+    float: left;
+    width: 80%;
+}
+
+.col-9 {
+    float: left;
+    width: 90%;
+}
+
+.col-10 {
+    float: left;
+    width: 100%;
+}
+
+.ml-1 {
+    margin-left: 5%;
+}
+
+.ml-2 {
+    margin-left: 10%;
+}
+
+.ml-3 {
+    margin-left: 15%;
+}
+
+.ml-4 {
+    margin-left: 20%;
+}
+
+.mt-1 {
+    margin-top: 5%;
+}
+
+.mt-2 {
+    margin-top: 10%;
+}
+
+.mt-3 {
+    margin-top: 15%;
+}
+
+.mt-4 {
+    margin-top: 20%;
+}
+
+.mr-1 {
+    margin-right: 5%;
+}
+
+.mr-2 {
+    margin-right: 10%;
+}
+
+.mr-3 {
+    margin-right: 15%;
+}
+
+.mr-4 {
+    margin-right: 20%;
+}
+
+.mb-1 {
+    margin-bottom: 5%;
+}
+
+.mb-2 {
+    margin-bottom: 10%;
+}
+
+.mb-3 {
+    margin-bottom: 15%;
+}
+
+.mb-4 {
+    margin-bottom: 20%;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.d-flex > * {
+    margin: 10px;
+}
+
