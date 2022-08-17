@@ -1,58 +1,35 @@
-import React from 'react';
-import { Order, OrderHistory, OrderStatus } from '../../app/models/order';
-
-const orderStatuses : OrderStatus[] = [
-    {
-        id: 1,
-        name: "Формируется"
-    },
-    {
-        id: 2,
-        name: "Оплачен"
-    },
-    {
-        id: 3,
-        name: "Выполнен"
-    }
-];
-
-const history : OrderHistory[] = [
-    {
-        id: "1",
-        createdAt: "15-08-2022",
-        status: orderStatuses[2],
-    },
-    {
-        id: "2",
-        createdAt: "15-08-2022",
-        status: orderStatuses[1],
-    },
-    {
-        id: "3",
-        createdAt: "15-08-2022",
-        status: orderStatuses[0],
-    }
-]
+import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
+import { useStore } from '../../app/stores/store';
 
 const HistoryTable = () => {
+
+    const {orderStore, pageStore} = useStore();
+
+    useEffect(() => {
+        let id = pageStore.orderId;
+        orderStore.getHistory(id!);
+    }, [orderStore]);
+
     return (
-        <table className='table'>
-            <thead>
-                <th>ID</th>
-                <th>Время изменений</th>
-                <th>Статус</th>
-            </thead>
-            <tbody>
-                {history.map(el => (
-                    <tr>
-                        <td>{el.id}</td>
-                        <td>{el.createdAt}</td>
-                        <td>{el.status.name}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+        <>
+            <h3>История</h3>
+            <table className='table'>
+                <thead>
+                    <th>Статус</th>
+                    <th>Время изменений</th>
+                </thead>
+                <tbody>
+                    {orderStore.orderhistory.map(el => (
+                        <tr>
+                            <td>{el.status.name}</td>
+                            <td>{el.createdAt}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
     );
 }
 
-export default HistoryTable;
+export default observer(HistoryTable);

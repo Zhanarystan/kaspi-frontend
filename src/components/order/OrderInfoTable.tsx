@@ -1,51 +1,48 @@
-import React from 'react';
-import { Order } from '../../app/models/order';
+import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
+import { Statuses } from '../../app/models/enum';
+import { useStore } from '../../app/stores/store';
 
 
-const order : Order = {
-    id: "1",
-    name: "ЗАКАЗ-2022-0001",
-    createdAt: "16-08-2022",
-    status: {
-        id: 3,
-        name: "Выполнен"
-    },
-    info: {
-        id:"1",
-        address: "Zharokova 194",
-        cardNumber: "1234 5678 9123 4567",
-        totalSum: 600000
-    }
-};
 const OrderInfoTable = () => {
+
+    const {orderStore, pageStore} = useStore();
+
+    useEffect(() => {
+        let id = pageStore.orderId;
+        orderStore.getOrder(id!);
+    }, [orderStore, pageStore]);
+
+    if(orderStore.order === null) return <></>;
     return (
-        <table className=''>
-            <tr>
-                <td><b>Название:</b></td>
-                <td>{order.name}</td>
-            </tr>
-            <tr>
-                <td><b>Создан:</b></td>
-                <td>{order.createdAt}</td>
-            </tr>
-            <tr>
-                <td><b>Статус:</b></td>
-                <td>{order.status.name}</td>
-            </tr>
-            <tr>
-                <td><b>Адрес:</b></td>
-                <td>{order.info?.address}</td>
-            </tr>
-            <tr>
-                <td><b>Номер банковской карты:</b></td>
-                <td>{order.info?.cardNumber}</td>
-            </tr>
-            <tr>
-                <td><b>Общая сумма заказа:</b></td>
-                <td>{order.info?.totalSum}</td>
-            </tr>
-        </table>
-    )
+        <>
+            <h3>Информация</h3>
+            <table className=''>
+                <tr>
+                    <td><b>Название:</b></td>
+                    <td>{orderStore.order!.name}</td>
+                </tr>
+                <tr>
+                    <td><b>Статус:</b></td>
+                    <td>{orderStore.order!.status?.name}</td>
+                </tr>
+                <tr>
+                    <td><b>Адрес:</b></td>
+                    <td>{orderStore.order!.info?.address || ""}</td>
+                </tr>
+                <tr>
+                    <td><b>Номер банковской карты:</b></td>
+                    <td>{orderStore.order!.info?.cardNumber || ""}</td>
+                </tr>
+                <tr>
+                    <td><b>Общая сумма заказа:</b></td>
+                    <td>{orderStore.order!.info?.totalSum || ""}</td>
+                </tr>
+            </table>
+            { orderStore.order?.status?.id === Statuses.Paid ? 
+                <button className='btn-green mt-2' onClick={() => orderStore.complete(pageStore.orderId!)}>Выполнить</button> : "" }   
+        </>
+    );
 }
 
-export default OrderInfoTable;
+export default observer(OrderInfoTable);

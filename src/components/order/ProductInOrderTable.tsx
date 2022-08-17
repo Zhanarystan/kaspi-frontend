@@ -1,36 +1,37 @@
-import React from 'react';
-import { Product } from '../../app/models/product';
-const products : Product[] = [
-    {
-        id: "1",
-        name: "IPhone 13",
-        price: 600000
-    },
-    {
-        id: "2",
-        name: "IPhone 12",
-        price: 400000
-    }
-];
+import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
+import { useStore } from '../../app/stores/store';
+
 const ProductInOrderTable = () => {
+    const {orderStore, pageStore} = useStore();
+
+    useEffect(() => {
+        let id = pageStore.orderId;
+        orderStore.getProducts(id!);
+    }, [orderStore, pageStore]);
+
     return (
-        <table className="table">
-            <thead>
-                <th>Название</th>
-                <th>Цена</th>
-                <th>Количество</th>
-            </thead>
-            <tbody>
-                {products.map(el => (
-                    <tr>
-                        <td>{el.name}</td>
-                        <td>{el.price}</td>
-                        <td>5</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+        <>
+            <h3>Продукты</h3>
+            <table className="table">
+                <thead>
+                    <th>Название</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                </thead>
+                <tbody>
+                    {orderStore.orderProducts.map(el => (
+                        <tr>
+                            <td>{el.product.name}</td>
+                            <td>{el.price}</td>
+                            <td>{el.amount}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
+        
     );
 }
 
-export default ProductInOrderTable;
+export default observer(ProductInOrderTable);

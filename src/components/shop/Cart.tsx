@@ -1,29 +1,20 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { Product } from '../../app/models/product';
-
-const products : Product[] = [
-    {
-        id: "1",
-        name: "IPhone 13",
-        price: 600000
-    },
-    {
-        id: "2",
-        name: "IPhone 12",
-        price: 400000
-    }
-];
+import { useStore } from '../../app/stores/store';
 
 const Cart = () => {
+
+    const {cartStore} = useStore();
+
     return (
         <>
             <h3>Корзина</h3>
             <table className='table'>
                 <tbody>
-                    {products.map(p => (
+                    {cartStore.cartProducts.map(p => (
                         <tr>
-                            <td>{p.id}</td>
-                            <td>{p.name}</td>
+                            <td>{p.product.name}</td>
+                            <td>{p.amount}</td>
                             <td>{p.price}</td>
                         </tr>
                     ))}
@@ -31,11 +22,11 @@ const Cart = () => {
             </table>
             <div className="d-flex mt-1 mb-1">
                 <p><b>Итого:</b></p>
-                <p>{products[0].price}</p>
+                <p>{cartStore.totalCost}</p>
             </div>
-            <button className='btn-full-width'>Оплатить</button>
+            <button className='btn-full-width' onClick={() => cartStore.checkout()}>Оплатить</button>
         </>
     );
 }
 
-export default Cart;
+export default observer(Cart);

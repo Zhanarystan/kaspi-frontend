@@ -33,3 +33,15 @@
     text-align: center;
     color: white;
 }
+
+.btn-link {
+    background: none;
+    border: none;
+    color: blue;
+    cursor: pointer;
+}
+
+.btn-link:hover{
+    background: none;
+    text-decoration: underline;
+ }

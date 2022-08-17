@@ -1,33 +1,32 @@
-import React from 'react';
-import { Product } from '../../app/models/product';
-const products : Product[] = [
-    {
-        id: "1",
-        name: "IPhone 13",
-        price: 600000
-    },
-    {
-        id: "2",
-        name: "IPhone 12",
-        price: 400000
-    }
-];
+import { observer } from 'mobx-react-lite';
+import React, { useEffect } from 'react';
+import { useStore } from '../../app/stores/store';
+
 const ProductTable = () => {
+
+    const {productStore, cartStore} = useStore();
+
+    useEffect(() => {
+        productStore.getProducts();
+    }, [productStore]);
+
     return (
         <table className="table">
             <thead>
+                <th>Фото</th>
                 <th>Название</th>
                 <th>Цена</th>
                 <th>Действия</th>
             </thead>
             <tbody>
-                {products.map(el => (
+                {productStore.productList.map(el => (
                     <tr>
+                        <td><img src={el.imageUrl} alt="icon" style={{width: '75px', height: '50px'}} /></td>
                         <td>{el.name}</td>
                         <td>{el.price}</td>
                         <td>
-                            <button className='btn-green'>+</button>
-                            <button className='btn-red'>-</button>
+                            <button className='btn-green' onClick={() => cartStore.addProductToCart(el.id)}>+</button>
+                            <button className='btn-red' onClick={() => cartStore.removeFromCart(el.id)}>-</button>
                         </td>
                     </tr>
                 ))}
@@ -36,4 +35,4 @@ const ProductTable = () => {
     );
 }
 
-export default ProductTable;
+export default observer(ProductTable);

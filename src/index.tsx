@@ -6,12 +6,13 @@ import './styles/button.css';
 import './styles/card.css';
 import './styles/input.css';
 import App from './App';
+import { store, StoreContext } from './app/stores/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  <StoreContext.Provider value={store}>
     <App />
-  </React.StrictMode>
+  </StoreContext.Provider>
 );

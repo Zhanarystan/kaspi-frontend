@@ -1,6 +1,4 @@
 import React from 'react';
-import { Order } from '../../app/models/order';
-import { Product } from '../../app/models/product';
 import HistoryTable from './HistoryTable';
 import OrderInfoTable from './OrderInfoTable';
 import ProductInOrderTable from './ProductInOrderTable';

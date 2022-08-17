@@ -1,5 +1,4 @@
 import React from 'react';
-import { Order, OrderStatus } from '../../app/models/order';
 import OrderTable from './OrderTable';
 
 const ManagementPage = () => {
